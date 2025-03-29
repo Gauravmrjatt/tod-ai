@@ -121,3 +121,53 @@
     @apply bg-background text-foreground font-sans;
   }
 }
+
+@keyframes diagonalMove {
+  0% {
+    background-position: 0 0;
+  }
+
+  100% {
+    background-position: 60px 60px;
+  }
+}
+
+@keyframes jump {
+
+  0%,
+  100% {
+    transform: translateY(0);
+  }
+
+  50% {
+    transform: translateY(-20px);
+  }
+}
+
+@keyframes confettiSpin {
+  0% {
+    transform: rotate(0deg);
+  }
+
+  100% {
+    transform: rotate(360deg);
+  }
+}
+
+.font-cartoon {
+  font-family: 'Comic Neue', cursive;
+  text-shadow: 3px 3px 0 rgba(0, 0, 0, 0.2);
+}
+
+.jump {
+  animation: jump 0.8s ease-in-out infinite;
+}
+
+/* Custom cartoonish patterns */
+.cartoon-pattern {
+  background-image:
+    radial-gradient(circle at 10% 10%, #fff3 15%, transparent 20%),
+    linear-gradient(45deg, #fff2 25%, transparent 25%),
+    linear-gradient(-45deg, #fff2 25%, transparent 25%);
+  background-size: 60px 60px;
+}
