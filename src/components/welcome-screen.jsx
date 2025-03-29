@@ -37,21 +37,7 @@ export default function WelcomeScreen() {
       transition={{ type: "spring", stiffness: 30, damping: 10 }}
       className="relative flex flex-col items-center justify-center h-screen text-white p-6 font-cartoon overflow-hidden"
     >
-      {/* Enhanced SVG Background with Double Layer */}
-      <AnimatePresence mode="popLayout">
-        <motion.div
-          key={steps[stepIndex].svg}
-          initial={{ opacity: 0, scale: 1.1 }}
-          animate={{ opacity: 1, scale: 1 }}
-          exit={{ opacity: 0, scale: 0.9 }}
-          transition={{ type: "spring", bounce: 0.4, duration: 1 }}
-          className="absolute inset-0 w-full h-full z-0"
-          style={{
-            background: `url(${steps[stepIndex].svg}) no-repeat center/cover`,
-            filter: "blur(2px) saturate(120%)"
-          }}
-        />
-      </AnimatePresence>
+
 
       {/* Floating Emoji Container */}
       <motion.div
