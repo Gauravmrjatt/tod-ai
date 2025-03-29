@@ -48,7 +48,7 @@ export default function HomeScreen() {
     {
       title: "Shape Matcher",
       description: "Match shapes to learn geometry",
-      image: "/assets/images/shape-matcher.jpeg"
+      image: "/assets/images/matcher.jpeg"
     }
   ]
 
