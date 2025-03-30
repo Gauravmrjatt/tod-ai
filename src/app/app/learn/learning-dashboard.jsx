@@ -29,7 +29,7 @@ export default function LearningDashboard({
         <div className="p-4">
           <div className="w-full aspect-video bg-[#f3f4f6] rounded-lg overflow-hidden">
             <Image
-              src="/placeholder.svg?height=200&width=350"
+              src="/assets/images/robo.jpg"
               alt="Video lesson"
               width={350}
               height={200}
@@ -89,7 +89,7 @@ export default function LearningDashboard({
           <div className="flex flex-col items-center">
             <div className="w-16 h-16 bg-[#f3f4f6] rounded-lg overflow-hidden">
               <Image
-                src="/placeholder.svg?height=64&width=64"
+                src="/assets/images/lvl1.jpg?height=64&width=64"
                 alt="Level 1 badge"
                 width={64}
                 height={64}
@@ -102,7 +102,7 @@ export default function LearningDashboard({
           <div className="flex flex-col items-center">
             <div className="w-16 h-16 bg-[#f3f4f6] rounded-lg overflow-hidden">
               <Image
-                src="/placeholder.svg?height=64&width=64"
+                src="/assets/images/quiz-pro.jpg"
                 alt="Quiz Pro badge"
                 width={64}
                 height={64}
@@ -115,7 +115,7 @@ export default function LearningDashboard({
           <div className="flex flex-col items-center">
             <div className="w-16 h-16 bg-[#f3f4f6] rounded-lg overflow-hidden">
               <Image
-                src="/placeholder.svg?height=64&width=64"
+                src="/assets/images/lvl2.jpg"
                 alt="Level 2 badge"
                 width={64}
                 height={64}
@@ -128,7 +128,7 @@ export default function LearningDashboard({
           <div className="flex flex-col items-center">
             <div className="w-16 h-16 bg-[#f3f4f6] rounded-lg overflow-hidden">
               <Image
-                src="/placeholder.svg?height=64&width=64"
+                src="/assets/images/speed_quiz.jpg"
                 alt="Speed Quiz badge"
                 width={64}
                 height={64}
@@ -141,7 +141,7 @@ export default function LearningDashboard({
           <div className="flex flex-col items-center">
             <div className="w-16 h-16 bg-[#f3f4f6] rounded-lg overflow-hidden">
               <Image
-                src="/placeholder.svg?height=64&width=64"
+                src="/assets/images/lvl3.jpg"
                 alt="Level 3 badge"
                 width={64}
                 height={64}
@@ -154,7 +154,7 @@ export default function LearningDashboard({
           <div className="flex flex-col items-center">
             <div className="w-16 h-16 bg-[#f3f4f6] rounded-lg overflow-hidden">
               <Image
-                src="/placeholder.svg?height=64&width=64"
+                src="/assets/images/quiz_champ.jpg"
                 alt="Quiz Champ badge"
                 width={64}
                 height={64}
