@@ -654,17 +654,17 @@ export default function Home() {
         </Canvas>
       </div>
       {/* Hero Section */}
-      <section className="bg-gradient-to-b from-black via-black/90 to-white h-[100vh] flex flex-col md:flex-row items-center gap-8 px-4 py-12">
+      <section className="bg-gradient-to-b from-white to-indigo-500 h-[100vh] flex flex-col md:flex-row items-center gap-8 px-4 py-12">
         <div className="flex-1 space-y-6">
-          <h1 className="text-4xl font-bold text-white">
+          <h1 className="text-4xl font-bold text-black">
             Smart Learning for <span className="bg-gradient-to-r from-blue-500 to-purple-500 bg-clip-text text-transparent">Curious Minds!</span>
           </h1>
-          <p className="text-lg md:text-xl text-[#cdd5e2]">
+          <p className="text-lg md:text-xl text-[#242e3d]">
             AI-powered interactive lessons, stories, and games designed to make learning fun and engaging for kids.
           </p>
           <div className="flex gap-4">
             <Button size="lg" className="text-lg z-5" >
-              Get Started for Free!
+              Get Started!
             </Button>
             <Button size="lg" variant="outline" className="text-lg z-5">
               Learn More
