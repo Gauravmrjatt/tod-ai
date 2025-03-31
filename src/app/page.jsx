@@ -627,24 +627,28 @@ export default function Home() {
           <Rocket className="text-primary h-6 w-6" />
         </div>
         <div className="hidden md:flex gap-6">
-          <Link href="#features" className="text-primary hover:text-primary/80">
+          <Link href="#features" className="text-primary hover:text-primary/80 z-5">
             Features
           </Link>
-          <Link href="#why-choose" className="text-primary hover:text-primary/80">
+          <Link href="#why-choose" className="text-primary hover:text-primary/80 z-5">
             Why Tod AI
           </Link>
-          <Link href="#how-it-works" className="text-primary hover:text-primary/80">
+          <Link href="#how-it-works" className="text-primary hover:text-primary/80 z-5">
             How It Works
           </Link>
-          <Link href="#testimonials" className="text-primary hover:text-primary/80">
+          <Link href="#testimonials" className="text-primary hover:text-primary/80 z-5">
             Testimonials
           </Link>
         </div>
         <div className="flex gap-2 z-5">
-          <Button variant="outline" className="hidden md:inline-flex">
-            Log In
-          </Button>
-          <Button>Sign Up Free</Button>
+          <Link href="/app">
+            <Button variant="outline" className="hidden md:inline-flex">
+              Log In
+            </Button>
+          </Link>
+          <Link href="/app">
+            <Button>Sign Up Free</Button>
+          </Link>
         </div>
       </nav>
       <div className="absolute top-0 inset-0 ">
@@ -662,19 +666,23 @@ export default function Home() {
           <p className="text-lg md:text-xl text-[#242e3d]">
             AI-powered interactive lessons, stories, and games designed to make learning fun and engaging for kids.
           </p>
-          <div className="flex gap-4">
-            <Button size="lg" className="text-lg z-5" >
-              Get Started!
-            </Button>
-            <Button size="lg" variant="outline" className="text-lg z-5">
-              Learn More
-            </Button>
+          <div className="flex gap-4 z-5">
+            <Link href="/app" className="z-5">
+              <Button size="lg" className="text-lg z-50" >
+                Get Started!
+              </Button>
+            </Link>
+            <Link href="/app" className="z-5">
+              <Button size="lg" variant="outline" className="text-lg z-50">
+                Learn More
+              </Button>
+            </Link>
           </div>
         </div>
         <div className="flex-1 flex justify-center">
           <div className="relative w-full max-w-md">
-            <div className="absolute -top-6 -left-6 w-24 h-24 bg-yellow-200 rounded-full opacity-70 animate-pulse"></div>
-            <div className="absolute -bottom-6 -right-6 w-32 h-32 bg-blue-200 rounded-full opacity-70 animate-pulse delay-300"></div>
+            {/* <div className="absolute -top-6 -left-6 w-24 h-24 bg-yellow-200 rounded-full opacity-70 animate-pulse"></div>
+            <div className="absolute -bottom-6 -right-6 w-32 h-32 bg-blue-200 rounded-full opacity-70 animate-pulse delay-300"></div> */}
             <div className="relative z-10  ">
               <img
                 src="/assets/images/home.webp"
@@ -687,7 +695,7 @@ export default function Home() {
       </section>
 
       {/* Features Section */}
-      <section id="features" className="bg-white py-16 px-4 mt-10">
+      <section id="features" className=" bg-gradient-to-t from-purple-500 to-indigo-500 py-16 px-4">
         {/* <div className="w-screen h-screen fixed top-0 left-0">
           <Canvas camera={{ position: [0, 0, 5], fov: 50 }}>
             <ambientLight intensity={0.8} />
@@ -733,8 +741,9 @@ export default function Home() {
         </div>
       </section>
 
-      {/* Why Choose Section */}
-      <section id="why-choose" className="py-16 px-4 bg-gradient-to-r from-purple-50 to-blue-50">
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1440 320"><path fill="#ad46ff" fill-opacity="1" d="M0,32L34.3,64C68.6,96,137,160,206,170.7C274.3,181,343,139,411,112C480,85,549,75,617,90.7C685.7,107,754,149,823,186.7C891.4,224,960,256,1029,266.7C1097.1,277,1166,267,1234,234.7C1302.9,203,1371,149,1406,122.7L1440,96L1440,0L1405.7,0C1371.4,0,1303,0,1234,0C1165.7,0,1097,0,1029,0C960,0,891,0,823,0C754.3,0,686,0,617,0C548.6,0,480,0,411,0C342.9,0,274,0,206,0C137.1,0,69,0,34,0L0,0Z"></path></svg>
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1440 320"><path fill="#e7008a" fill-opacity="1" d="M0,128L205.7,192L411.4,64L617.1,32L822.9,128L1028.6,256L1234.3,64L1440,256L1440,320L1234.3,320L1028.6,320L822.9,320L617.1,320L411.4,320L205.7,320L0,320Z"></path></svg>
+      <section id="why-choose" className="py-16 px-4 bg-gradient-to-b from-[#e7008a] to-while">
         <div className="container mx-auto">
           <h2 className="text-3xl md:text-4xl font-bold text-center text-primary mb-12">Why Choose Tod AI?</h2>
           <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
@@ -787,7 +796,8 @@ export default function Home() {
       </section>
 
       {/* How It Works Section */}
-      <section id="how-it-works" className="py-16 px-4 bg-white">
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1440 320"><path fill="#ffd700" fill-opacity="1" d="M0,64L0,160L36.9,160L36.9,64L73.8,64L73.8,192L110.8,192L110.8,288L147.7,288L147.7,256L184.6,256L184.6,64L221.5,64L221.5,320L258.5,320L258.5,32L295.4,32L295.4,192L332.3,192L332.3,192L369.2,192L369.2,224L406.2,224L406.2,64L443.1,64L443.1,160L480,160L480,288L516.9,288L516.9,160L553.8,160L553.8,96L590.8,96L590.8,288L627.7,288L627.7,224L664.6,224L664.6,32L701.5,32L701.5,64L738.5,64L738.5,32L775.4,32L775.4,256L812.3,256L812.3,288L849.2,288L849.2,256L886.2,256L886.2,64L923.1,64L923.1,128L960,128L960,96L996.9,96L996.9,224L1033.8,224L1033.8,256L1070.8,256L1070.8,288L1107.7,288L1107.7,160L1144.6,160L1144.6,96L1181.5,96L1181.5,224L1218.5,224L1218.5,192L1255.4,192L1255.4,128L1292.3,128L1292.3,288L1329.2,288L1329.2,128L1366.2,128L1366.2,256L1403.1,256L1403.1,96L1440,96L1440,320L1403.1,320L1403.1,320L1366.2,320L1366.2,320L1329.2,320L1329.2,320L1292.3,320L1292.3,320L1255.4,320L1255.4,320L1218.5,320L1218.5,320L1181.5,320L1181.5,320L1144.6,320L1144.6,320L1107.7,320L1107.7,320L1070.8,320L1070.8,320L1033.8,320L1033.8,320L996.9,320L996.9,320L960,320L960,320L923.1,320L923.1,320L886.2,320L886.2,320L849.2,320L849.2,320L812.3,320L812.3,320L775.4,320L775.4,320L738.5,320L738.5,320L701.5,320L701.5,320L664.6,320L664.6,320L627.7,320L627.7,320L590.8,320L590.8,320L553.8,320L553.8,320L516.9,320L516.9,320L480,320L480,320L443.1,320L443.1,320L406.2,320L406.2,320L369.2,320L369.2,320L332.3,320L332.3,320L295.4,320L295.4,320L258.5,320L258.5,320L221.5,320L221.5,320L184.6,320L184.6,320L147.7,320L147.7,320L110.8,320L110.8,320L73.8,320L73.8,320L36.9,320L36.9,320L0,320L0,320Z"></path></svg>
+      <section id="how-it-works" className="py-16 px-4 bg-[#ffd700]">
         <div className="container mx-auto">
           <h2 className="text-3xl md:text-4xl font-bold text-center text-primary mb-12">How It Works?</h2>
           <div className="flex flex-col md:flex-row gap-8 justify-between">
@@ -802,7 +812,7 @@ export default function Home() {
           </div>
         </div>
       </section>
-
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1440 320"><path fill="#ffd700" fill-opacity="1" d="M0,96L0,288L36.9,288L36.9,160L73.8,160L73.8,128L110.8,128L110.8,256L147.7,256L147.7,64L184.6,64L184.6,96L221.5,96L221.5,32L258.5,32L258.5,0L295.4,0L295.4,128L332.3,128L332.3,224L369.2,224L369.2,192L406.2,192L406.2,32L443.1,32L443.1,192L480,192L480,96L516.9,96L516.9,128L553.8,128L553.8,256L590.8,256L590.8,256L627.7,256L627.7,64L664.6,64L664.6,256L701.5,256L701.5,96L738.5,96L738.5,64L775.4,64L775.4,288L812.3,288L812.3,0L849.2,0L849.2,224L886.2,224L886.2,64L923.1,64L923.1,64L960,64L960,32L996.9,32L996.9,224L1033.8,224L1033.8,160L1070.8,160L1070.8,192L1107.7,192L1107.7,32L1144.6,32L1144.6,32L1181.5,32L1181.5,96L1218.5,96L1218.5,288L1255.4,288L1255.4,96L1292.3,96L1292.3,64L1329.2,64L1329.2,256L1366.2,256L1366.2,160L1403.1,160L1403.1,128L1440,128L1440,0L1403.1,0L1403.1,0L1366.2,0L1366.2,0L1329.2,0L1329.2,0L1292.3,0L1292.3,0L1255.4,0L1255.4,0L1218.5,0L1218.5,0L1181.5,0L1181.5,0L1144.6,0L1144.6,0L1107.7,0L1107.7,0L1070.8,0L1070.8,0L1033.8,0L1033.8,0L996.9,0L996.9,0L960,0L960,0L923.1,0L923.1,0L886.2,0L886.2,0L849.2,0L849.2,0L812.3,0L812.3,0L775.4,0L775.4,0L738.5,0L738.5,0L701.5,0L701.5,0L664.6,0L664.6,0L627.7,0L627.7,0L590.8,0L590.8,0L553.8,0L553.8,0L516.9,0L516.9,0L480,0L480,0L443.1,0L443.1,0L406.2,0L406.2,0L369.2,0L369.2,0L332.3,0L332.3,0L295.4,0L295.4,0L258.5,0L258.5,0L221.5,0L221.5,0L184.6,0L184.6,0L147.7,0L147.7,0L110.8,0L110.8,0L73.8,0L73.8,0L36.9,0L36.9,0L0,0L0,0Z"></path></svg>
       {/* Testimonials Section */}
       <section id="testimonials" className="py-16 px-4 bg-gradient-to-r from-blue-50 to-purple-50">
         <div className="container mx-auto">
