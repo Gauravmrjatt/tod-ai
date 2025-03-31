@@ -514,7 +514,7 @@ import { OrbitControls, Stars, Box, Sphere, Plane } from "@react-three/drei";
 import { Button } from "@/components/ui/button";
 import { motion } from "framer-motion";
 import { FaBook, FaGamepad, FaRobot, FaMusic, FaChild } from "react-icons/fa";
-
+import Link from "next/link"
 export default function LandingPage() {
   return (
     <div className="bg-gradient-to-b from-purple-600 to-black min-h-screen text-white text-center p-6 relative">
@@ -536,8 +536,10 @@ export default function LandingPage() {
       >
         <h1 className="text-5xl font-extrabold mb-4 text-yellow-300">🌟 Tod AI - Learning Like a Superhero! 🌟</h1>
         <p className="text-lg mb-6">AI-powered interactive lessons, stories, and games designed to make learning fun and adventurous for kids.</p>
-        <Button className="bg-yellow-400 text-black text-lg px-6 py-3 rounded-full shadow-lg">Get Started for Free!</Button>
-      </motion.div>
+        <Link href="/app">
+          <Button className="bg-yellow-400 text-black text-lg px-6 py-3 rounded-full shadow-lg">Get Started for Free!</Button>
+
+        </Link></motion.div>
 
       {/* Features Section */}
       <div className="mt-12 grid grid-cols-1 md:grid-cols-3 gap-6 relative z-10">
