@@ -1,14 +1,16 @@
 "use client"
 import Image from "next/image"
-import { Search } from "lucide-react"
+import { Search, Bell, User } from "lucide-react"
 import { Button } from "@/components/ui/button"
+import Link from "next/link"
 
 export default function HomeScreen() {
   const categories = [
     {
       title: "Alphabet",
       description: "Learn letters",
-      image: "/assets/images/abc.jpeg"
+      image: "/assets/images/abc.jpeg",
+      link: "/app/alphabet"
     },
     {
       title: "Numbers",
@@ -59,28 +61,15 @@ export default function HomeScreen() {
         <h1 className="text-lg font-medium">Home</h1>
         <div className="flex items-center gap-2">
           <button
-            onClick={() => onNavigate("learning-dashboard")}
-            className="w-6 h-6"
+
+            className="p-1 rounded-full flex items-center justify-center text-[#8e94a0] hover:bg-[#f3f4f6] cursor-pointer"
           >
-            <Image
-              src="/placeholder.svg?height=24&width=24"
-              alt="Notifications"
-              width={24}
-              height={24}
-              className="rounded-full"
-            />
+            <Bell size={20} />
           </button>
           <button
-            onClick={() => onNavigate("create-account")}
-            className="w-8 h-8"
+            className="p-1 bg-[#f3f4f6] rounded-full flex items-center justify-center text-[#8e94a0] hover:bg-[#fff] cursor-pointer"
           >
-            <Image
-              src="/placeholder.svg?height=32&width=32"
-              alt="Profile"
-              width={32}
-              height={32}
-              className="rounded-full"
-            />
+            <User />
           </button>
         </div>
       </div>
@@ -101,7 +90,7 @@ export default function HomeScreen() {
 
       {/* Welcome message */}
       <div className="px-4 py-2">
-        <h2 className="text-xl font-medium">Hello, Steve!</h2>
+        <h2 className="text-xl font-medium">Hello, Abhay!</h2>
       </div>
 
       {/* Categories */}
@@ -120,32 +109,28 @@ export default function HomeScreen() {
               'from-teal-500'
             ];
             return (
-              <div
-                key={index}
-                className={`relative rounded-xl p-5 transform transition-transform hover:scale-105 shadow-lg h-[250px] flex flex-col justify-between overflow-hidden text-white`}
-                style={{ backgroundImage: `url(${category.image || "/placeholder.svg"})`, backgroundSize: 'cover', backgroundPosition: 'center' }}
-              >
-                <div className={`absolute inset-0 bg-gradient-to-t ${bgColors[index]} to-transparent`}></div>
+              <Link key={index} href={category.link || "#"}>
+                <div
 
-                <div className="relative z-10">
-                  <h3 className="font-medium text-lg mb-2">{category.title}</h3>
-                  <p className="text-white/90 text-sm mb-4">{category.description}</p>
-                </div>
-
-                <Button
-                  variant="secondary"
-                  size="sm"
-                  className={`relative z-10 w-full bg-gradient-to-r ${bgColors[index]} to-white/20 text-white border-white/30 hover:opacity-80`}
-                  onClick={() => {
-                    if (index === 0) onNavigate("learning-dashboard");
-                    else if (index === 1) onNavigate("gamified-lessons");
-                    else if (index === 2) onNavigate("emotion-tracking");
-                    else onNavigate("learning-dashboard");
-                  }}
+                  className={`relative rounded-xl p-5 transform transition-transform hover:scale-105 shadow-lg h-[250px] flex flex-col justify-between overflow-hidden text-white`}
+                  style={{ backgroundImage: `url(${category.image || "/placeholder.svg"})`, backgroundSize: 'cover', backgroundPosition: 'center' }}
                 >
-                  Play Now
-                </Button>
-              </div>
+                  <div className={`absolute inset-0 bg-gradient-to-t ${bgColors[index]} to-transparent`}></div>
+
+                  <div className="relative z-10">
+                    <h3 className="font-medium text-lg mb-2">{category.title}</h3>
+                    <p className="text-white/90 text-sm mb-4">{category.description}</p>
+                  </div>
+
+                  <Button
+                    variant="secondary"
+                    size="sm"
+                    className={`relative z-10 w-full bg-gradient-to-r ${bgColors[index]} to-white/20 text-white border-white/30 hover:opacity-80`}
+                  >
+                    Play Now
+                  </Button>
+                </div>
+              </Link>
             );
           })}
         </div>
