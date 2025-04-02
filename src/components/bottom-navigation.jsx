@@ -20,7 +20,7 @@ export default function BottomNavigation({
 
   return (
     (<div
-      className="fixed bottom-0 left-0 right-0 bg-white border-t border-[#f3f4f6] h-16 flex items-center justify-around px-4 max-w-md mx-auto">
+      className="fixed bottom-0 left-0 right-0 bg-white border-t border-[#f3f4f6] h-16 flex items-center justify-around px-4 max-w-md mx-auto z-10">
       {tabs.map((tab) => {
         const Icon = tab.icon
         const isActive = currentTab === tab.id

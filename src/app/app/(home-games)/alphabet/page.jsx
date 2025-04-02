@@ -1,12 +1,10 @@
 "use client"
-
 import { useState } from "react"
 import { motion } from "framer-motion"
 import { LockIcon, UnlockIcon, Star, BookOpen, Music, ImageIcon, Pencil } from "lucide-react"
 import Link from "next/link"
 import { cn } from "@/lib/utils"
-import Image from "next/image"
-
+import { ArrowLeft } from "lucide-react"
 export default function AlphabetLearning() {
     const [hoveredLetter, setHoveredLetter] = useState(null)
     const alphabet = [
@@ -37,27 +35,36 @@ export default function AlphabetLearning() {
         { letter: "Y", color: "from-teal-400 to-green-600", icon: <ImageIcon className="w-4 h-4" />, theme: "Yoga" },
         { letter: "Z", color: "from-orange-400 to-red-600", icon: <BookOpen className="w-4 h-4" />, theme: "Zoo" },
     ]
-
     return (
-        <div className="min-h-screen bg-red-500 bg-[url('/assets/svg/bg3.svg')] bg-repeat bg-cover p-6">
-            <div className="max-w-7xl mx-auto">
-                <header className="text-center mb-12">
-                    <div className="inline-block relative">
-                        <h1 className="text-4xl md:text-6xl font-bold text-transparent bg-clip-text bg-gradient-to-r from-green-100 to-green-600 mb-4 tracking-wide">
-                            Alphabet Adventure!
-                        </h1>
-
-                    </div>
-                    <p className="text-xl text-blue-700 max-w-2xl mx-auto">
+        <>
+            <div className="flex items-center justify-between p-4 border-b border-[#f3f4f6] mb-10">
+                <Link href="/app">
+                    <button
+                        className="p-1 bg-[#f3f4f6] rounded-full flex items-center justify-center text-[#8e94a0] hover:bg-[#fff] cursor-pointer"
+                    >
+                        <ArrowLeft />
+                    </button>
+                </Link>
+                <h1 className="text-lg font-medium ml-3 mr-auto">Alphabet</h1>
+            </div>
+            <div className="min-h-screen bg-red-500 bg-[url('/assets/svg/bg3.svg')] bg-repeat sm:bg-cover sm:bg-center p-6">
+                <div className="max-w-7xl mx-auto">
+                    <header className="text-center mb-12">
+                        <div className="inline-block relative">
+                            <h1 className="text-4xl md:text-6xl font-bold text-transparent bg-clip-text bg-gradient-to-r from-green-100 to-green-600 mb-4 tracking-wide">
+                                Alphabet Adventure!
+                            </h1>
+                        </div>
+                        {/* <p className="text-xl text-blue-700 max-w-2xl mx-auto">
                         Learn your ABCs with fun! Start with A and unlock new letters as you go!
-                    </p>
-                </header>
+                    </p> */}
+                    </header>
 
-                <div className="relative pb-16">
-                    {/* Decorative elements */}
-                    <div className="absolute w-full h-full pointer-events-none z-0">
+                    <div className="relative pb-16">
+                        {/* Decorative elements */}
+                        <div className="absolute w-full h-full pointer-events-none z-0">
 
-                        {/* {[...Array(8)].map((_, i) => (
+                            {/* {[...Array(8)].map((_, i) => (
                             <div
                                 key={i}
                                 className="absolute rounded-full opacity-20"
@@ -72,218 +79,181 @@ export default function AlphabetLearning() {
                             />
                         ))} */}
 
-                        <svg className="w-full h-full absolute top-0 left-0 z-0" viewBox="0 0 1000 1000" preserveAspectRatio="none">
 
-                            <path
-                                d="M100,100 C150,50 200,150 250,100 C300,50 350,150 400,100 C450,50 500,150 550,100 C600,50 650,150 700,100 C750,50 800,150 850,100 C900,50 950,150 1000,100"
-                                stroke="url(#gradient1)"
-                                strokeWidth="12"
-                                strokeLinecap="round"
-                                strokeDasharray="15,15"
-                                fill="none"
-                                className="path-animation"
-                            />
-
-                            {/* Secondary decorative paths */}
-                            <path
-                                d="M120,120 C170,70 220,170 270,120 C320,70 370,170 420,120 C470,70 520,170 570,120 C620,70 670,170 720,120 C770,70 820,170 870,120 C920,70 970,170 1020,120"
-                                stroke="url(#gradient2)"
-                                strokeWidth="6"
-                                strokeLinecap="round"
-                                strokeDasharray="5,15"
-                                fill="none"
-                                className="path-animation-reverse"
-                                opacity="0.6"
-                            />
-
-                            {/* Gradient definitions */}
-                            <defs>
-                                <linearGradient id="gradient1" x1="0%" y1="0%" x2="100%" y2="0%">
-                                    <stop offset="0%" stopColor="#FFC107" />
-                                    <stop offset="50%" stopColor="#FF5722" />
-                                    <stop offset="100%" stopColor="#9C27B0" />
-                                </linearGradient>
-                                <linearGradient id="gradient2" x1="0%" y1="0%" x2="100%" y2="0%">
-                                    <stop offset="0%" stopColor="#4CAF50" />
-                                    <stop offset="50%" stopColor="#2196F3" />
-                                    <stop offset="100%" stopColor="#F44336" />
-                                </linearGradient>
-                            </defs>
-                        </svg>
-
-                        {/* Small decorative elements along the path */}
-                        {[...Array(10)].map((_, i) => (
-                            <div
-                                key={`star-${i}`}
-                                className="absolute z-10"
-                                style={{
-                                    top: `${10 + i * 8}%`,
-                                    left: `${5 + i * 9}%`,
-                                    transform: `rotate(${Math.random() * 360}deg)`,
-                                }}
-                            >
-                                <Star className="w-4 h-4 text-yellow-300 fill-yellow-300 opacity-70" />
-                            </div>
-                        ))}
-                    </div>
-
-                    {/* Alphabet grid - enhanced with themes and better visuals */}
-                    <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-6 xl:grid-cols-7 gap-6 relative z-10">
-                        {alphabet.map((item, index) => {
-                            const isUnlocked = item.letter === "A"
-
-                            return (
-                                <motion.div
-                                    key={item.letter}
-                                    className={cn(
-                                        "relative flex flex-col items-center justify-center",
-                                        "rounded-2xl p-4 h-36 sm:h-40 md:h-44 shadow-lg transition-all duration-300",
-                                        isUnlocked
-                                            ? `bg-gradient-to-br ${item.color} cursor-pointer`
-                                            : "bg-gradient-to-br from-gray-300 to-gray-400 opacity-80",
-                                        hoveredLetter === item.letter && isUnlocked && "scale-110",
-                                    )}
-                                    whileHover={isUnlocked ? { scale: 1.1, rotate: 2 } : {}}
-                                    whileTap={isUnlocked ? { scale: 0.95 } : {}}
-                                    onMouseEnter={() => setHoveredLetter(item.letter)}
-                                    onMouseLeave={() => setHoveredLetter(null)}
+                            {/* Small decorative elements along the path */}
+                            {[...Array(10)].map((_, i) => (
+                                <div
+                                    key={`star-${i}`}
+                                    className="absolute z-10"
+                                    style={{
+                                        top: `${10 + i * 8}%`,
+                                        left: `${5 + i * 9}%`,
+                                        transform: `rotate(${Math.random() * 360}deg)`,
+                                    }}
                                 >
-                                    {/* Theme badge */}
-                                    <div className="absolute -top-2 -left-2 bg-white px-2 py-1 rounded-lg shadow-md text-xs font-semibold text-purple-700 flex items-center gap-1">
-                                        {item.icon}
-                                        <span>{item.theme}</span>
-                                    </div>
+                                    <Star className="w-4 h-4 text-yellow-300 fill-yellow-300 opacity-70" />
+                                </div>
+                            ))}
+                        </div>
 
-                                    {isUnlocked ? (
-                                        <Link
-                                            href={`/letter/${item.letter.toLowerCase()}`}
-                                            className="w-full h-full flex flex-col items-center justify-center"
-                                        >
-                                            <div className="relative">
-                                                <span className="text-5xl sm:text-6xl font-bold text-white mb-2 drop-shadow-md">
-                                                    {item.letter}
-                                                </span>
-                                                {/* Decorative elements around the letter */}
-                                                <div className="absolute -top-3 -right-3 animate-pulse">
-                                                    <Star className="w-5 h-5 text-yellow-200" />
-                                                </div>
-                                                <div className="absolute -bottom-3 -left-3 animate-pulse" style={{ animationDelay: "0.5s" }}>
-                                                    <Star className="w-4 h-4 text-yellow-200" />
-                                                </div>
-                                            </div>
-                                            <div className="mt-2 flex items-center gap-1">
-                                                <UnlockIcon className="w-4 h-4 text-white" />
-                                                <span className="text-white text-sm font-medium">Unlocked</span>
-                                            </div>
-                                            <div className="absolute -top-2 -right-2">
-                                                <Star className="w-8 h-8 text-yellow-300 fill-yellow-300" />
-                                            </div>
-                                        </Link>
-                                    ) : (
-                                        <>
-                                            <div className="relative">
-                                                <span className="text-5xl sm:text-6xl font-bold text-gray-500 mb-2">{item.letter}</span>
-                                                {/* Subtle hint of color behind locked letters */}
-                                                <div
-                                                    className="absolute inset-0 opacity-10 blur-sm rounded-full"
-                                                    style={{
-                                                        background: `linear-gradient(to bottom right, var(--${item.color.split(" ")[0].split("-")[1]}), var(--${item.color.split(" ")[1].split("-")[1]}))`,
-                                                        width: "120%",
-                                                        height: "120%",
-                                                        top: "-10%",
-                                                        left: "-10%",
-                                                        zIndex: -1,
-                                                    }}
-                                                ></div>
-                                            </div>
-                                            <div className="mt-2 flex items-center gap-1">
-                                                <LockIcon className="w-4 h-4 text-gray-500" />
-                                                <span className="text-gray-500 text-sm font-medium">Locked</span>
-                                            </div>
-                                        </>
-                                    )}
+                        {/* Alphabet grid - enhanced with themes and better visuals */}
+                        <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-6 xl:grid-cols-7 gap-6 relative z-10">
+                            {alphabet.map((item, index) => {
+                                const isUnlocked = item.letter === "A"
 
-                                    {/* Level indicator - enhanced */}
-                                    <div className="absolute -bottom-3 left-1/2 transform -translate-x-1/2 bg-white rounded-full w-10 h-10 flex items-center justify-center shadow-lg border-2 border-purple-200">
-                                        <span className="text-sm font-bold text-purple-600">{index + 1}</span>
-                                    </div>
-                                </motion.div>
-                            )
-                        })}
+                                return (
+                                    <motion.div
+                                        key={item.letter}
+                                        className={cn(
+                                            "relative flex flex-col items-center justify-center",
+                                            "rounded-2xl p-4 h-36 sm:h-40 md:h-44 shadow-lg transition-all duration-300",
+                                            isUnlocked
+                                                ? `bg-gradient-to-br ${item.color} cursor-pointer`
+                                                : "bg-gradient-to-br from-gray-300 to-gray-400 opacity-80",
+                                            hoveredLetter === item.letter && isUnlocked && "scale-110",
+                                        )}
+                                        whileHover={isUnlocked ? { scale: 1.1, rotate: 2 } : {}}
+                                        whileTap={isUnlocked ? { scale: 0.95 } : {}}
+                                        onMouseEnter={() => setHoveredLetter(item.letter)}
+                                        onMouseLeave={() => setHoveredLetter(null)}
+                                    >
+                                        {/* Theme badge */}
+                                        <div className="absolute -top-2 -left-2 bg-white px-2 py-1 rounded-lg shadow-md text-xs font-semibold text-purple-700 flex items-center gap-1">
+                                            {item.icon}
+                                            <span>{item.theme}</span>
+                                        </div>
+
+                                        {isUnlocked ? (
+                                            <Link
+                                                href={`/letter/${item.letter.toLowerCase()}`}
+                                                className="w-full h-full flex flex-col items-center justify-center"
+                                            >
+                                                <div className="relative">
+                                                    <span className="text-5xl sm:text-6xl font-bold text-white mb-2 drop-shadow-md">
+                                                        {item.letter}
+                                                    </span>
+                                                    {/* Decorative elements around the letter */}
+                                                    <div className="absolute -top-3 -right-3 animate-pulse">
+                                                        <Star className="w-5 h-5 text-yellow-200" />
+                                                    </div>
+                                                    <div className="absolute -bottom-3 -left-3 animate-pulse" style={{ animationDelay: "0.5s" }}>
+                                                        <Star className="w-4 h-4 text-yellow-200" />
+                                                    </div>
+                                                </div>
+                                                <div className="mt-2 flex items-center gap-1">
+                                                    <UnlockIcon className="w-4 h-4 text-white" />
+                                                    <span className="text-white text-sm font-medium">Unlocked</span>
+                                                </div>
+                                                <div className="absolute -top-2 -right-2">
+                                                    <Star className="w-8 h-8 text-yellow-300 fill-yellow-300" />
+                                                </div>
+                                            </Link>
+                                        ) : (
+                                            <>
+                                                <div className="relative">
+                                                    <span className="text-5xl sm:text-6xl font-bold text-gray-500 mb-2">{item.letter}</span>
+                                                    {/* Subtle hint of color behind locked letters */}
+                                                    <div
+                                                        className="absolute inset-0 opacity-10 blur-sm rounded-full"
+                                                        style={{
+                                                            background: `linear-gradient(to bottom right, var(--${item.color.split(" ")[0].split("-")[1]}), var(--${item.color.split(" ")[1].split("-")[1]}))`,
+                                                            width: "120%",
+                                                            height: "120%",
+                                                            top: "-10%",
+                                                            left: "-10%",
+                                                            zIndex: -1,
+                                                        }}
+                                                    ></div>
+                                                </div>
+                                                <div className="mt-2 flex items-center gap-1">
+                                                    <LockIcon className="w-4 h-4 text-gray-500" />
+                                                    <span className="text-gray-500 text-sm font-medium">Locked</span>
+                                                </div>
+                                            </>
+                                        )}
+
+                                        {/* Level indicator - enhanced */}
+                                        <div className="absolute -bottom-3 left-1/2 transform -translate-x-1/2 bg-white rounded-full w-10 h-10 flex items-center justify-center shadow-lg border-2 border-purple-200">
+                                            <span className="text-sm font-bold text-purple-600">{index + 1}</span>
+                                        </div>
+                                    </motion.div>
+                                )
+                            })}
+                        </div>
+                    </div>
+
+                    {/* Instructions - enhanced with icons and better styling */}
+                    <div className="mt-16 bg-white rounded-xl p-8 shadow-xl max-w-2xl mx-auto border border-purple-100 relative overflow-hidden mb-[50px]">
+                        <div className="absolute top-0 right-0 w-32 h-32 bg-gradient-to-br from-purple-100 to-pink-100 rounded-bl-full opacity-50"></div>
+
+                        <h2 className="text-2xl font-bold text-transparent bg-clip-text bg-gradient-to-r from-purple-600 to-pink-600 mb-6">
+                            How to Play
+                        </h2>
+
+                        <ul className="space-y-4 text-gray-700 relative z-10">
+                            <li className="flex items-start bg-purple-50 p-3 rounded-lg">
+                                <div className="bg-purple-100 rounded-full p-2 mr-3 mt-0">
+                                    <Star className="w-5 h-5 text-purple-500" />
+                                </div>
+                                <div>
+                                    <span className="font-semibold">Start with letter A</span>
+                                    <p className="text-sm text-gray-600 mt-1">Complete fun activities and learn words that start with A</p>
+                                </div>
+                            </li>
+                            <li className="flex items-start bg-blue-50 p-3 rounded-lg">
+                                <div className="bg-blue-100 rounded-full p-2 mr-3 mt-0">
+                                    <UnlockIcon className="w-5 h-5 text-blue-500" />
+                                </div>
+                                <div>
+                                    <span className="font-semibold">Unlock new letters</span>
+                                    <p className="text-sm text-gray-600 mt-1">Each completed letter unlocks the next one in the alphabet</p>
+                                </div>
+                            </li>
+                            <li className="flex items-start bg-pink-50 p-3 rounded-lg">
+                                <div className="bg-pink-100 rounded-full p-2 mr-3 mt-0">
+                                    <Star className="w-5 h-5 text-pink-500" />
+                                </div>
+                                <div>
+                                    <span className="font-semibold">Collect stars and rewards</span>
+                                    <p className="text-sm text-gray-600 mt-1">
+                                        Earn stars for each letter you master and track your progress
+                                    </p>
+                                </div>
+                            </li>
+                        </ul>
+
+                        {/* Progress tracker */}
+                        <div className="mt-8 pt-6 border-t border-purple-100">
+                            <h3 className="text-lg font-semibold text-purple-700 mb-3">Your Progress</h3>
+                            <div className="w-full bg-gray-200 rounded-full h-4 overflow-hidden">
+                                <div
+                                    className="bg-gradient-to-r from-purple-500 to-pink-500 h-4 rounded-full"
+                                    style={{ width: "4%" }}
+                                ></div>
+                            </div>
+                            <div className="flex justify-between mt-2 text-xs text-gray-600">
+                                <span>1/26 Letters</span>
+                                <span>4% Complete</span>
+                            </div>
+                        </div>
                     </div>
                 </div>
 
-                {/* Instructions - enhanced with icons and better styling */}
-                <div className="mt-16 bg-white rounded-xl p-8 shadow-xl max-w-2xl mx-auto border border-purple-100 relative overflow-hidden">
-                    <div className="absolute top-0 right-0 w-32 h-32 bg-gradient-to-br from-purple-100 to-pink-100 rounded-bl-full opacity-50"></div>
-
-                    <h2 className="text-2xl font-bold text-transparent bg-clip-text bg-gradient-to-r from-purple-600 to-pink-600 mb-6">
-                        How to Play
-                    </h2>
-
-                    <ul className="space-y-4 text-gray-700 relative z-10">
-                        <li className="flex items-start bg-purple-50 p-3 rounded-lg">
-                            <div className="bg-purple-100 rounded-full p-2 mr-3 mt-0">
-                                <Star className="w-5 h-5 text-purple-500" />
-                            </div>
-                            <div>
-                                <span className="font-semibold">Start with letter A</span>
-                                <p className="text-sm text-gray-600 mt-1">Complete fun activities and learn words that start with A</p>
-                            </div>
-                        </li>
-                        <li className="flex items-start bg-blue-50 p-3 rounded-lg">
-                            <div className="bg-blue-100 rounded-full p-2 mr-3 mt-0">
-                                <UnlockIcon className="w-5 h-5 text-blue-500" />
-                            </div>
-                            <div>
-                                <span className="font-semibold">Unlock new letters</span>
-                                <p className="text-sm text-gray-600 mt-1">Each completed letter unlocks the next one in the alphabet</p>
-                            </div>
-                        </li>
-                        <li className="flex items-start bg-pink-50 p-3 rounded-lg">
-                            <div className="bg-pink-100 rounded-full p-2 mr-3 mt-0">
-                                <Star className="w-5 h-5 text-pink-500" />
-                            </div>
-                            <div>
-                                <span className="font-semibold">Collect stars and rewards</span>
-                                <p className="text-sm text-gray-600 mt-1">
-                                    Earn stars for each letter you master and track your progress
-                                </p>
-                            </div>
-                        </li>
-                    </ul>
-
-                    {/* Progress tracker */}
-                    <div className="mt-8 pt-6 border-t border-purple-100">
-                        <h3 className="text-lg font-semibold text-purple-700 mb-3">Your Progress</h3>
-                        <div className="w-full bg-gray-200 rounded-full h-4 overflow-hidden">
-                            <div
-                                className="bg-gradient-to-r from-purple-500 to-pink-500 h-4 rounded-full"
-                                style={{ width: "4%" }}
-                            ></div>
-                        </div>
-                        <div className="flex justify-between mt-2 text-xs text-gray-600">
-                            <span>1/26 Letters</span>
-                            <span>4% Complete</span>
-                        </div>
-                    </div>
+                {/* Enhanced decorative elements */}
+                <div className="fixed top-10 right-10 z-0 opacity-10">
+                    <span className="text-9xl font-bold text-purple-300">A</span>
+                </div>
+                <div className="fixed bottom-10 left-10 z-0 opacity-10">
+                    <span className="text-9xl font-bold text-blue-300">Z</span>
+                </div>
+                <div className="fixed bottom-20 right-20 z-0 opacity-10 transform rotate-12">
+                    <span className="text-8xl font-bold text-pink-300">B</span>
+                </div>
+                <div className="fixed top-20 left-20 z-0 opacity-10 transform -rotate-12">
+                    <span className="text-8xl font-bold text-green-300">Y</span>
                 </div>
             </div>
-
-            {/* Enhanced decorative elements */}
-            <div className="fixed top-10 right-10 z-0 opacity-10">
-                <span className="text-9xl font-bold text-purple-300">A</span>
-            </div>
-            <div className="fixed bottom-10 left-10 z-0 opacity-10">
-                <span className="text-9xl font-bold text-blue-300">Z</span>
-            </div>
-            <div className="fixed bottom-20 right-20 z-0 opacity-10 transform rotate-12">
-                <span className="text-8xl font-bold text-pink-300">B</span>
-            </div>
-            <div className="fixed top-20 left-20 z-0 opacity-10 transform -rotate-12">
-                <span className="text-8xl font-bold text-green-300">Y</span>
-            </div>
-        </div>
+        </>
     )
 }
 
