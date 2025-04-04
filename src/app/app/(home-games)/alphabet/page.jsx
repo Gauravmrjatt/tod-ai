@@ -80,7 +80,6 @@ export default function AlphabetLearning() {
                                 return (
                                     <motion.div
                                         key={item.letter}
-
                                         className="relative flex flex-col items-center justify-center rounded-2xl p-4 h-36 sm:h-40 md:h-44 shadow-lg transition-all duration-300 bg-cover bg-center"
                                         style={{
                                             backgroundImage: `linear-gradient(${isUnlocked ? "rgba(0,0,0,0)" : "rgba(0,0,0,0.5)"}, ${isUnlocked ? "rgba(0,0,0,0)" : "rgba(0,0,0,0.5)"}), url('${item.src}')`

@@ -1,36 +1,105 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://github.com/vercel/next.js/tree/canary/packages/create-next-app).
+# Tod-AI 🧠✨
 
-## Getting Started
+A fun and interactive web-based game designed to teach toddlers the English alphabet through engaging visuals and audio. Built using **Next.js**, **Tailwind CSS**, and **React**, this educational tool offers a colorful, kid-friendly experience to support early childhood learning.
 
-First, run the development server:
+## 🌟 Project Overview
+
+**Tod-AI** solves the problem of early education accessibility by providing a playful yet educational interface that helps toddlers learn the alphabet in a visually engaging way.
+
+### 🔍 What it Does
+
+- Displays the English alphabet with playful animations.
+- Plays corresponding phonetic sounds and example words.
+- Offers a clean, minimal, distraction-free design ideal for toddlers.
+- Fully responsive for tablets and phones.
+
+### ✨ Key Features
+
+- 🎨 Bright and colorful design for visual stimulation.
+- 🔊 Sound effects for each alphabet letter to reinforce learning.
+- 📱 Mobile-friendly and responsive interface.
+- ⚡ Fast performance thanks to Next.js and Vercel deployment.
+
+---
+
+## 📦 Dependencies
+
+| Package           | Version    |
+|-------------------|------------|
+| Node.js           | >=16.x     |
+| Next.js           | ^14.x      |
+| React             | ^18.x      |
+| Tailwind CSS      | ^3.x       |
+| Lucide React      | ^0.4x      |
+| Framer Motion     | ^12.x      |
+| Three Js          | ^0.1x      |
+
+You can find all dependencies in [`package.json`](./package.json).
+
+---
+
+## 🛠️ Setup Instructions
+
+Follow the steps below to run the project locally:
+
+### 1. Clone the Repository
 
 ```bash
-npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
+git clone https://github.com/Gauravmrjatt/tod-ai.git
+cd tod-ai
 ```
+### 2. Install Dependencies
+```bash
+npm install
+```
+### 3. Run the Development Server
+```bash
+npm run dev
+```
+---
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+## 🚀 Deployment
+The project is deployed on Vercel. You can access it [here](https://tod-ai-teal.vercel.app/).
 
-You can start editing the page by modifying `app/page.js`. The page auto-updates as you edit the file.
+## ⚙️Environment Configuration
+No special environment variables are required for this project at the moment.
+---
+## 📝 License
+This project is licensed under the MIT License - see the [LICENSE.md](./LICENSE.md) file for details.
+---
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+## 👥 Team Member
+- **Priya** – Leader & Designer
+  [GitHub Profile](https://github.com/priyuu29)
+- **Shivam** – Ai Engineer
+  [GitHub Profile](https://github.com/SI1am/)
+- **Gaurav** – Developer & Designer  
+  [GitHub Profile](https://github.com/Gauravmrjatt)
+- **Abhay** – Developer & Designer  
+  [GitHub Profile](https://github.com/Abhaykauahal21)
 
-## Learn More
+---
 
-To learn more about Next.js, take a look at the following resources:
+## 🤝 Contribution Guidelines
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+Contributions are welcome! If you'd like to contribute:
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
+1. **Fork** the repository.
+2. **Create a new branch** for your feature or bugfix.
+3. **Make your changes** and commit them.
+4. **Submit a Pull Request** for review.
 
-## Deploy on Vercel
+You’re also welcome to open **issues** for feature suggestions or bug reports.
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
+---
 
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+## 🔮 Future Plans
+
+- 🎮 Add interactive games and quizzes to reinforce alphabet learning.
+- 🔢 Include numbers, shapes, and colors for broader educational content.
+- 🌍 Support for multiple languages (e.g., Hindi, Spanish).
+- 📊 Parental dashboard to track user progress and interactions.
+
+---
+
+👶 Designed with love to support early childhood education in the digital age.
