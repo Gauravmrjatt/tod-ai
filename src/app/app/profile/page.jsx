@@ -1,4 +1,4 @@
-import CreateAccount from "@/app/app/profile/create-account"
+import CreateAccount from "@/app/auth/CreateAccount"
 export default function HomeScreen() {
     return <CreateAccount />
 }

@@ -602,7 +602,7 @@ import {
 import Link from "next/link"
 
 function LearningMascot() {
-  const { scene } = useGLTF('/robot_model.glb');
+  const { scene } = useGLTF('/robot.glb');
   const ref = useRef();
 
   useFrame(({ clock }) => {
