@@ -1,146 +1,253 @@
-import { useRef, useState, useEffect } from 'react';
-import Tesseract from 'tesseract.js';
-import { Eraser } from 'lucide-react';
-
-const Canvas = () => {
+'use client';
+import React, { useRef, useState, useEffect } from 'react';
+import { useTheme } from 'next-themes'
+const WritingCanvas = ({
+    placeholderLetter = 'A',
+    gridSize = 20,
+    language = 'zh_TW',
+    initialWidth = 400,
+    initialHeight = 300,
+    onSuccess,
+}) => {
+    const { theme } = useTheme()
     const canvasRef = useRef(null);
-    const [isDrawing, setIsDrawing] = useState(false);
-    const [penColor, setPenColor] = useState('#000000');
-    const [penWidth, setPenWidth] = useState(5);
+    const containerRef = useRef(null);
     const [context, setContext] = useState(null);
-    const [recognizedWord, setRecognizedWord] = useState('');
-    const [matchPercentage, setMatchPercentage] = useState(null);
+    const [drawing, setDrawing] = useState(false);
+    const [handwritingX, setHandwritingX] = useState([]);
+    const [handwritingY, setHandwritingY] = useState([]);
+    const [trace, setTrace] = useState([]);
+    const [step, setStep] = useState([]);
+    const [redoStep, setRedoStep] = useState([]);
+    const [redoTrace, setRedoTrace] = useState([]);
+    const [recognitionResult, setRecognitionResult] = useState(null);
+    const [status, setStatus] = useState(null);
+    const [canvasSize, setCanvasSize] = useState({ width: initialWidth, height: initialHeight });
 
-    const referenceWord = 'A';
+    const recognitionTimeoutRef = useRef(null);
+    const lineWidth = 3;
 
     useEffect(() => {
         const canvas = canvasRef.current;
         const ctx = canvas.getContext('2d');
-        ctx.lineJoin = 'round';
-        ctx.lineCap = 'round';
         setContext(ctx);
-        drawGrid(ctx);
-        drawWordOutline(ctx, referenceWord);
+        handleResize();
+
+        window.addEventListener('resize', handleResize);
+        return () => {
+            window.removeEventListener('resize', handleResize);
+            if (recognitionTimeoutRef.current) {
+                clearTimeout(recognitionTimeoutRef.current);
+            }
+        };
     }, []);
 
-    const startDrawing = (e) => {
-        const { offsetX, offsetY } = getCoordinates(e);
+    useEffect(() => {
+        if (context) {
+            drawGridAndPlaceholder();
+        }
+    }, [canvasSize, placeholderLetter, context]);
+
+    useEffect(() => {
+        if (status === 'Success' && onSuccess) {
+            onSuccess();
+        }
+    }, [status]);
+
+    const handleResize = () => {
+        const container = containerRef.current;
+        if (!container) return;
+
+        const width = container.clientWidth;
+        const height = width * 0.75;
+
+        const canvas = canvasRef.current;
+        const dpr = window.devicePixelRatio || 1;
+
+        canvas.width = width * dpr;
+        canvas.height = height * dpr;
+        canvas.style.width = `${width}px`;
+        canvas.style.height = `${height}px`;
+
+        const ctx = canvas.getContext('2d');
+        ctx.setTransform(1, 0, 0, 1, 0, 0);
+        ctx.scale(dpr, dpr);
+        ctx.lineCap = 'round';
+        ctx.lineJoin = 'round';
+        ctx.lineWidth = lineWidth;
+
+        setCanvasSize({ width, height });
+        drawGridAndPlaceholder();
+        if (step.length > 0) loadFromUrl(step[step.length - 1]);
+    };
+
+    const drawGridAndPlaceholder = () => {
+        if (!context) return;
+        const { width, height } = canvasSize;
+        context.clearRect(0, 0, width, height);
+
+        // context.strokeStyle = '#fff';
+
+        // context.strokeStyle = '#e0e0e0';
+        context.strokeStyle = theme === 'dark' ?   '#ffffff26' : '#e0e0e0';
+        context.lineWidth = 0.5;
+        for (let x = 0; x <= width; x += gridSize) {
+            context.beginPath();
+            context.moveTo(x, 0);
+            context.lineTo(x, height);
+            context.stroke();
+        }
+        for (let y = 0; y <= height; y += gridSize) {
+            context.beginPath();
+            context.moveTo(0, y);
+            context.lineTo(width, y);
+            context.stroke();
+        }
+
+        context.font = `${height * 0.8}px Arial`;
+
+        context.fillStyle = theme === 'dark' ?   'rgba(255, 255, 255, 0.15)' : 'rgba(0, 0, 0, 0.15)';
+        context.textAlign = 'center';
+        context.textBaseline = 'middle';
+        context.fillText(placeholderLetter, width / 2, height / 2);
+
+        context.strokeStyle = theme === 'dark' ?   'white' : 'black';
+        context.lineWidth = lineWidth;
+    };
+
+    const getPosition = (e, touch = false) => {
+        const rect = canvasRef.current.getBoundingClientRect();
+        const clientX = touch ? e.touches[0].clientX : e.clientX;
+        const clientY = touch ? e.touches[0].clientY : e.clientY;
+        return [
+            (clientX - rect.left) * (canvasSize.width / rect.width),
+            (clientY - rect.top) * (canvasSize.height / rect.height),
+        ];
+    };
+
+    const startDraw = (e, touch = false) => {
+        if (!context) return;
+        const [x, y] = getPosition(e, touch);
         context.beginPath();
-        context.moveTo(offsetX, offsetY);
-        setIsDrawing(true);
+        context.moveTo(x, y);
+        setHandwritingX([x]);
+        setHandwritingY([y]);
+        setDrawing(true);
     };
 
-    const draw = (e) => {
-        if (!isDrawing) return;
-        const { offsetX, offsetY } = getCoordinates(e);
-        context.lineTo(offsetX, offsetY);
-        context.strokeStyle = penColor;
-        context.lineWidth = penWidth;
+    const draw = (e, touch = false) => {
+        if (!drawing || !context) return;
+        const [x, y] = getPosition(e, touch);
+        context.lineTo(x, y);
         context.stroke();
+        setHandwritingX((prev) => [...prev, x]);
+        setHandwritingY((prev) => [...prev, y]);
     };
 
-    const stopDrawing = () => {
-        context.closePath();
-        setIsDrawing(false);
+    const endDraw = () => {
+        setDrawing(false);
+        const stroke = [handwritingX, handwritingY, []];
+        const newTrace = [...trace, stroke];
+        setTrace(newTrace);
+        setStep((prev) => [...prev, canvasRef.current.toDataURL()]);
+        if (recognitionTimeoutRef.current) clearTimeout(recognitionTimeoutRef.current);
+        recognitionTimeoutRef.current = setTimeout(() => recognize(newTrace), 500);
     };
 
-    const clearCanvas = () => {
-        const canvas = canvasRef.current;
-        context.clearRect(0, 0, canvas.width, canvas.height);
-        drawGrid(context);
-        drawWordOutline(context, referenceWord);
+    const erase = () => {
+        drawGridAndPlaceholder();
+        setStep([]);
+        setRedoStep([]);
+        setRedoTrace([]);
+        setTrace([]);
+        setRecognitionResult(null);
+        setStatus(null);
+        if (recognitionTimeoutRef.current) clearTimeout(recognitionTimeoutRef.current);
     };
 
-    const recognizeWord = () => {
-        const canvas = canvasRef.current;
-        const canvasImage = canvas.toDataURL('image/png');
-        Tesseract.recognize(canvasImage, 'eng', {
-            logger: (m) => console.log(m),
-        }).then(({ data: { text } }) => {
-            const recognized = text.trim();
-            setRecognizedWord(recognized);
-            calculateMatchPercentage(recognized);
+    const recognize = (traceData) => {
+        const data = JSON.stringify({
+            options: 'enable_pre_space',
+            requests: [
+                {
+                    writing_guide: {
+                        writing_area_width: canvasSize.width,
+                        writing_area_height: canvasSize.height,
+                    },
+                    ink: traceData,
+                    language: language,
+                },
+            ],
         });
-    };
 
-    const calculateMatchPercentage = (recognized) => {
-        const similarity = getWordSimilarity(recognized, referenceWord);
-        setMatchPercentage(similarity);
-    };
-
-    const getWordSimilarity = (word1, word2) => {
-        if (!word1 || !word2) return 0;
-        return word1.toLowerCase().trim() === word2.toLowerCase().trim() ? 100 : 0;
-    };
-
-    const drawGrid = (ctx) => {
-        const gridSize = 20;
-        ctx.strokeStyle = '#ddd';
-        ctx.lineWidth = 0.5;
-        for (let y = 0; y < ctx.canvas.height; y += gridSize) {
-            ctx.beginPath();
-            ctx.moveTo(0, y);
-            ctx.lineTo(ctx.canvas.width, y);
-            ctx.stroke();
-        }
-        for (let x = 0; x < ctx.canvas.width; x += gridSize) {
-            ctx.beginPath();
-            ctx.moveTo(x, 0);
-            ctx.lineTo(x, ctx.canvas.height);
-            ctx.stroke();
-        }
-    };
-
-    const drawWordOutline = (ctx, word) => {
-        ctx.font = '300px Arial';
-        ctx.fillStyle = 'rgba(0, 0, 0, 0.1)';
-        const x = ctx.canvas.width / 2 - ctx.measureText(word).width / 2;
-        const y = ctx.canvas.height / 2 + 50;
-        ctx.fillText(word, x, y);
-    };
-
-    const getCoordinates = (e) => {
-        const canvas = canvasRef.current;
-        const rect = canvas.getBoundingClientRect();
-        const isTouch = e.touches ? e.touches[0] : e;
-        return {
-            offsetX: isTouch.clientX - rect.left,
-            offsetY: isTouch.clientY - rect.top,
+        const xhr = new XMLHttpRequest();
+        xhr.onreadystatechange = function () {
+            if (xhr.readyState === 4) {
+                if (xhr.status === 200) {
+                    const response = JSON.parse(xhr.responseText);
+                    if (response.length === 1) {
+                        setRecognitionResult('Error: ' + response[0]);
+                        setStatus('Fail');
+                    } else {
+                        const results = response[1][0][1];
+                        setRecognitionResult(results.join(', '));
+                        if (results.includes(placeholderLetter)) {
+                            setStatus('Success');
+                        } else {
+                            setStatus('Fail');
+                        }
+                    }
+                } else {
+                    setRecognitionResult('Recognition error');
+                    setStatus('Fail');
+                }
+            }
         };
+
+        xhr.open('POST', 'https://www.google.com.tw/inputtools/request?ime=handwriting&app=mobilesearch&cs=1&oe=UTF-8');
+        xhr.setRequestHeader('content-type', 'application/json');
+        xhr.send(data);
+    };
+
+    const loadFromUrl = (url) => {
+        const img = new Image();
+        img.onload = () => {
+            drawGridAndPlaceholder();
+            context.drawImage(img, 0, 0, canvasSize.width, canvasSize.height);
+        };
+        img.src = url;
     };
 
     return (
-        <div className="flex flex-col items-center p-4">
-            <h2 className="text-lg font-semibold">Write the Word: "{referenceWord}"</h2>
+        <div ref={containerRef} className="w-full" >
             <canvas
                 ref={canvasRef}
-                width={350}
-                height={350}
-                className="border bg-white touch-none"
-                onMouseDown={startDrawing}
-                onMouseMove={draw}
-                onMouseUp={stopDrawing}
-                onMouseLeave={stopDrawing}
-                onTouchStart={startDrawing}
-                onTouchMove={draw}
-                onTouchEnd={stopDrawing}
+                className="w-full rounded border shadow-md touch-none"
+                onMouseDown={(e) => startDraw(e)}
+                onMouseMove={(e) => draw(e)}
+                onMouseUp={endDraw}
+                onMouseLeave={() => setDrawing(false)}
+                onTouchStart={(e) => startDraw(e, true)}
+                onTouchMove={(e) => draw(e, true)}
+                onTouchEnd={endDraw}
             />
-            <div className="mt-4 flex gap-3">
-                <button className="bg-red-600 text-white px-4 py-2 rounded-lg flex items-center gap-2" onClick={clearCanvas}>
-                    <Eraser size={20} /> Clear
-                </button>
-                <button className="bg-gray-800 text-white px-4 py-2 rounded-lg" onClick={recognizeWord}>
-                    Recognize Word
+            <div className="flex justify-center gap-4 mt-4">
+                <button onClick={erase} className="bg-red-500 hover:bg-red-600 text-white px-4 py-2 rounded">
+                    Erase
                 </button>
             </div>
-            {recognizedWord && (
-                <p className="mt-2 text-center text-lg font-medium">Recognized: {recognizedWord}</p>
-            )}
-            {matchPercentage !== null && (
-                <p className="text-center mt-1">Matching: {matchPercentage}%</p>
+
+            {status && (
+                <div
+                    className={`text-center mt-4 font-semibold ${
+                        status === 'Success' ? 'text-green-600' : 'text-red-500'
+                    }`}
+                >
+                    {status}
+                </div>
             )}
         </div>
     );
 };
 
-export default Canvas;
+export default WritingCanvas;

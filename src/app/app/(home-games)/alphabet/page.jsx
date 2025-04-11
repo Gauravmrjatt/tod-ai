@@ -3,16 +3,15 @@ import { useState } from "react"
 import { motion } from "framer-motion"
 import { LockIcon, UnlockIcon, Star, BookOpen, Music, ImageIcon, Pencil } from "lucide-react"
 import Link from "next/link"
-import { cn } from "@/lib/utils"
 import { ArrowLeft } from "lucide-react"
 
 export default function AlphabetLearning() {
     const [hoveredLetter, setHoveredLetter] = useState(null)
     const alphabet = [
-        { letter: "A", color: "from-red-400 to-red-600", icon: <ImageIcon className="w-4 h-4" />, theme: "Ant", src: "/assets/games/a/ant.jpeg" },
-        { letter: "B", color: "from-blue-400 to-blue-600", icon: <BookOpen className="w-4 h-4" />, theme: "Books", src: "/assets/games/a/apple.jpeg" },
-        { letter: "C", color: "from-green-400 to-green-600", icon: <Music className="w-4 h-4" />, theme: "Colors", src: "/assets/games/a/airplane.jpeg" },
-        { letter: "D", color: "from-yellow-400 to-yellow-600", icon: <Pencil className="w-4 h-4" />, theme: "Drawing", src: "/assets/games/a/arrow.jpeg" },
+        { letter: "A", color: "from-red-400 to-red-600", icon: <ImageIcon className="w-4 h-4" />, theme: "Ant", src: "/assets/games/a/ant.jpeg", unlocked:true },
+        { letter: "B", color: "from-blue-400 to-blue-600", icon: <BookOpen className="w-4 h-4" />, theme: "Books", src: "/assets/games/b/boat.jpeg",unlocked:true  },
+        { letter: "C", color: "from-green-400 to-green-600", icon: <Music className="w-4 h-4" />, theme: "Colors", src: "/assets/games/c/cat.jpeg",unlocked:true  },
+        { letter: "D", color: "from-yellow-400 to-yellow-600", icon: <Pencil className="w-4 h-4" />, theme: "Drawing", src: "/assets/games/d/dog.jpeg" },
         { letter: "E", color: "from-purple-400 to-purple-600", icon: <ImageIcon className="w-4 h-4" />, theme: "Earth", src: "/assets/games/a/astronaut.jpeg" },
         { letter: "F", color: "from-pink-400 to-pink-600", icon: <BookOpen className="w-4 h-4" />, theme: "Food", src: "/assets/games/e/earth.jpeg" },
         { letter: "G", color: "from-indigo-400 to-indigo-600", icon: <Music className="w-4 h-4" />, theme: "Games", src: "/assets/games/e/earth.jpeg" },
@@ -39,20 +38,21 @@ export default function AlphabetLearning() {
 
     return (
         <>
-            <div className="flex items-center justify-between p-4 border-b border-[#f3f4f6] mb-10">
+            <div className="flex items-center justify-between p-4 border-b ">
                 <Link href="/app">
-                    <button className="p-1 bg-[#f3f4f6] rounded-full flex items-center justify-center text-[#8e94a0] hover:bg-[#fff] cursor-pointer">
+                    <button className="p-1  rounded-full flex items-center justify-center text-[#8e94a0] hover:bg-[#fff] cursor-pointer">
                         <ArrowLeft />
                     </button>
                 </Link>
                 <h1 className="text-lg font-medium ml-3 mr-auto">Alphabet</h1>
             </div>
-            <div className="min-h-screen bg-red-500 bg-[url('/assets/svg/bg3.svg')] bg-repeat sm:bg-cover sm:bg-center p-6">
+            <div className="min-h-screen relative p-6 overflow-hidden">
+                <div className="absolute inset-0 z-0 bg-repeat sm:bg-cover sm:bg-center bg-[url('/assets/svg/bg3.svg')] dark:filter dark:invert dark:brightness-110 dark:opacity-90"></div>
                 <div className="max-w-7xl mx-auto">
                     <header className="text-center mb-12">
                         <div className="inline-block relative">
                             <h1 className="text-4xl md:text-6xl font-bold text-transparent bg-clip-text bg-gradient-to-r from-green-100 to-green-600 mb-4 tracking-wide">
-                                Alphabet Adventure!
+                                Alphabet Mastery!
                             </h1>
                         </div>
                     </header>
@@ -76,7 +76,7 @@ export default function AlphabetLearning() {
 
                         <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-6 xl:grid-cols-7 gap-6 relative z-10">
                             {alphabet.map((item, index) => {
-                                const isUnlocked = item.letter === "A"
+                                const isUnlocked = item.unlocked || false
                                 return (
                                     <motion.div
                                         key={item.letter}
@@ -89,7 +89,7 @@ export default function AlphabetLearning() {
                                         onMouseEnter={() => setHoveredLetter(item.letter)}
                                         onMouseLeave={() => setHoveredLetter(null)}
                                     >
-                                        <div className="absolute -top-2 -left-2 bg-white px-2 py-1 rounded-lg shadow-md text-xs font-semibold text-purple-700 flex items-center gap-1">
+                                        <div className="absolute -top-2 -left-2 bg-background px-2 py-1 rounded-lg shadow-md text-xs font-semibold text-purple-700 flex items-center gap-1">
                                             {item.icon}
                                             <span>{item.theme}</span>
                                         </div>
@@ -141,7 +141,7 @@ export default function AlphabetLearning() {
                                             </>
                                         )}
 
-                                        <div className="absolute -bottom-3 left-1/2 transform -translate-x-1/2 bg-white rounded-full w-10 h-10 flex items-center justify-center shadow-lg border-2 border-purple-200">
+                                        <div className="absolute -bottom-3 left-1/2 transform -translate-x-1/2 bg-background rounded-full w-10 h-10 flex items-center justify-center shadow-lg border-2 ">
                                             <span className="text-sm font-bold text-purple-600">{index + 1}</span>
                                         </div>
                                     </motion.div>
@@ -150,54 +150,66 @@ export default function AlphabetLearning() {
                         </div>
                     </div>
 
-                    <div className="mt-16 bg-white rounded-xl p-8 shadow-xl max-w-2xl mx-auto border border-purple-100 relative overflow-hidden mb-[50px]">
-                        <div className="absolute top-0 right-0 w-32 h-32 bg-gradient-to-br from-purple-100 to-pink-100 rounded-bl-full opacity-50"></div>
+                    <div className="mt-6 rounded-xl p-8 shadow-xl max-w-2xl mx-auto border relative overflow-hidden mb-[50px]
+                        bg-background border-purple-100 dark:border-purple-800 dark:bg-gray-900">
 
-                        <h2 className="text-2xl font-bold text-transparent bg-clip-text bg-gradient-to-r from-purple-600 to-pink-600 mb-6">
+                        {/* Background shape */}
+                        <div className="absolute top-0 right-0 w-32 h-32 bg-gradient-to-br from-purple-100 to-pink-100 rounded-bl-full opacity-50 dark:from-purple-900 dark:to-pink-900"></div>
+
+                        {/* Heading */}
+                        <h2 className="text-2xl font-bold text-transparent bg-clip-text bg-gradient-to-r from-purple-600 to-pink-600 dark:from-purple-400 dark:to-pink-400 mb-6">
                             How to Play
                         </h2>
 
-                        <ul className="space-y-4 text-gray-700 relative z-10">
-                            <li className="flex items-start bg-purple-50 p-3 rounded-lg">
-                                <div className="bg-purple-100 rounded-full p-2 mr-3 mt-0">
-                                    <Star className="w-5 h-5 text-purple-500" />
+                        {/* Steps List */}
+                        <ul className="space-y-4 relative z-10 text-gray-700 dark:text-gray-300">
+                            <li className="flex items-start p-3 rounded-lg bg-purple-50 dark:bg-purple-900/40">
+                                <div className="bg-purple-100 dark:bg-purple-800 rounded-full p-2 mr-3 mt-0">
+                                    <Star className="w-5 h-5 text-purple-500 dark:text-purple-300" />
                                 </div>
                                 <div>
                                     <span className="font-semibold">Start with letter A</span>
-                                    <p className="text-sm text-gray-600 mt-1">Complete fun activities and learn words that start with A</p>
+                                    <p className="text-sm mt-1 text-gray-600 dark:text-gray-400">
+                                        Complete fun activities and learn words that start with A
+                                    </p>
                                 </div>
                             </li>
-                            <li className="flex items-start bg-blue-50 p-3 rounded-lg">
-                                <div className="bg-blue-100 rounded-full p-2 mr-3 mt-0">
-                                    <UnlockIcon className="w-5 h-5 text-blue-500" />
+
+                            <li className="flex items-start p-3 rounded-lg bg-blue-50 dark:bg-blue-900/40">
+                                <div className="bg-blue-100 dark:bg-blue-800 rounded-full p-2 mr-3 mt-0">
+                                    <UnlockIcon className="w-5 h-5 text-blue-500 dark:text-blue-300" />
                                 </div>
                                 <div>
                                     <span className="font-semibold">Unlock new letters</span>
-                                    <p className="text-sm text-gray-600 mt-1">Each completed letter unlocks the next one in the alphabet</p>
+                                    <p className="text-sm mt-1 text-gray-600 dark:text-gray-400">
+                                        Each completed letter unlocks the next one in the alphabet
+                                    </p>
                                 </div>
                             </li>
-                            <li className="flex items-start bg-pink-50 p-3 rounded-lg">
-                                <div className="bg-pink-100 rounded-full p-2 mr-3 mt-0">
-                                    <Star className="w-5 h-5 text-pink-500" />
+
+                            <li className="flex items-start p-3 rounded-lg bg-pink-50 dark:bg-pink-900/40">
+                                <div className="bg-pink-100 dark:bg-pink-800 rounded-full p-2 mr-3 mt-0">
+                                    <Star className="w-5 h-5 text-pink-500 dark:text-pink-300" />
                                 </div>
                                 <div>
                                     <span className="font-semibold">Collect stars and rewards</span>
-                                    <p className="text-sm text-gray-600 mt-1">
+                                    <p className="text-sm mt-1 text-gray-600 dark:text-gray-400">
                                         Earn stars for each letter you master and track your progress
                                     </p>
                                 </div>
                             </li>
                         </ul>
 
-                        <div className="mt-8 pt-6 border-t border-purple-100">
-                            <h3 className="text-lg font-semibold text-purple-700 mb-3">Your Progress</h3>
-                            <div className="w-full bg-gray-200 rounded-full h-4 overflow-hidden">
+                        {/* Progress Section */}
+                        <div className="mt-8 pt-6 border-t border-purple-100 dark:border-purple-800">
+                            <h3 className="text-lg font-semibold text-purple-700 dark:text-purple-300 mb-3">Your Progress</h3>
+                            <div className="w-full bg-gray-200 dark:bg-gray-700 rounded-full h-4 overflow-hidden">
                                 <div
-                                    className="bg-gradient-to-r from-purple-500 to-pink-500 h-4 rounded-full"
+                                    className="bg-gradient-to-r from-purple-500 to-pink-500 h-4 rounded-full dark:from-purple-400 dark:to-pink-400"
                                     style={{ width: "4%" }}
                                 ></div>
                             </div>
-                            <div className="flex justify-between mt-2 text-xs text-gray-600">
+                            <div className="flex justify-between mt-2 text-xs text-gray-600 dark:text-gray-400">
                                 <span>1/26 Letters</span>
                                 <span>4% Complete</span>
                             </div>

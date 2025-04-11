@@ -54,19 +54,19 @@ export default function HomeScreen() {
   ]
 
   return (
-    <div className="h-full flex flex-col bg-white">
+    <div className="h-full flex flex-col ">
       {/* Header */}
-      <div className="flex items-center justify-between p-4 border-b border-[#f3f4f6]">
+      <div className="flex items-center justify-between p-4 ]">
         <h1 className="text-lg font-medium">Home</h1>
         <div className="flex items-center gap-2">
           <button
 
-            className="p-1 rounded-full flex items-center justify-center text-[#8e94a0] hover:bg-[#f3f4f6] cursor-pointer"
+            className="p-1 rounded-full flex items-center justify-center cursor-pointer"
           >
             <Bell size={20} />
           </button>
           <button
-            className="p-1 bg-[#f3f4f6] rounded-full flex items-center justify-center text-[#8e94a0] hover:bg-[#fff] cursor-pointer"
+            className="p-1  rounded-full flex items-center justify-center  cursor-pointer"
           >
             <User />
           </button>
@@ -82,7 +82,7 @@ export default function HomeScreen() {
           <input
             type="text"
             placeholder="Search lessons..."
-            className="block w-full pl-10 pr-3 py-2 bg-[#f3f4f6] text-sm rounded-md focus:outline-none focus:ring-2 focus:ring-[#1798e8]"
+            className="block w-full pl-10 pr-3 py-2 ] text-sm rounded-md focus:outline-none focus:ring-2 focus:ring-[#1798e8]"
           />
         </div>
       </div>

@@ -1,8 +1,16 @@
-import BottomNavigation from "@/components/bottom-navigation"
+'use client';
+
+import { usePathname } from 'next/navigation';
+import BottomNavigation from '@/components/bottom-navigation';
 
 export default function RootLayout({ children }) {
-    return (<>
-        {children}
-        <BottomNavigation />
-    </>)
+    const pathname = usePathname();
+    const hideBottomNav = pathname.startsWith('/app/');
+
+    return (
+        <>
+            {children}
+            {!hideBottomNav && <BottomNavigation />}
+        </>
+    );
 }
