@@ -6,10 +6,12 @@ import {
   FileText,
   Home,
   LineChart,
+  Gamepad2,
   Settings,
   X
 } from "lucide-react"
 import { Button } from "@/components/ui/button"
+import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar"
 
 export default function Sidebar({
   sidebarOpen,
@@ -32,6 +34,7 @@ export default function Sidebar({
       path: "/dashboard/activities"
     },
     { id: "reports", label: "Reports", icon: FileText, path: "/dashboard/reports" },
+    { id: "admin", label: "Games (Admin Only)", icon: Gamepad2, path: "/dashboard/admin" },
     { id: "settings", label: "Settings", icon: Settings, path: "/dashboard/settings" }
   ]
 
@@ -41,9 +44,8 @@ export default function Sidebar({
 
   return (
     <div
-      className={`fixed inset-y-0 left-0 z-50 w-64 transform bg-background transition-transform duration-300 ease-in-out lg:translate-x-0 lg:static lg:inset-auto lg:h-screen lg:w-64 ${
-        sidebarOpen ? "translate-x-0" : "-translate-x-full"
-      }`}
+      className={`fixed inset-y-0 left-0 z-50 w-64 transform bg-background transition-transform duration-300 ease-in-out lg:translate-x-0 lg:static lg:inset-auto lg:h-screen lg:w-64 ${sidebarOpen ? "translate-x-0" : "-translate-x-full"
+        }`}
     >
       <div className="flex h-full flex-col border-r">
         <div className="flex items-center justify-between p-4">
@@ -63,14 +65,12 @@ export default function Sidebar({
             <span className="sr-only">Close sidebar</span>
           </Button>
         </div>
-
-        <div className="flex items-center gap-2 px-4 py-2 border-b">
+        {selectedChild && <div className="flex items-center gap-2 px-4 py-2 border-b">
           <div className="flex h-8 w-8 items-center justify-center rounded-full bg-muted">
-            <img
-              src={selectedChild.photo || "/placeholder.svg"}
-              alt={selectedChild.name}
-              className="h-8 w-8 rounded-full"
-            />
+            <Avatar>
+              <AvatarImage src="https://github.com/shadcn.png" />
+              <AvatarFallback>{selectedChild.name[0]}</AvatarFallback>
+            </Avatar>
           </div>
           <div>
             <p className="text-sm font-medium">{selectedChild.name}</p>
@@ -78,7 +78,8 @@ export default function Sidebar({
               {selectedChild.age} years • {selectedChild.class}
             </p>
           </div>
-        </div>
+        </div>}
+
 
         <nav className="flex-1 overflow-auto p-2">
           <ul className="space-y-1">
@@ -86,11 +87,10 @@ export default function Sidebar({
               <li key={item.id}>
                 <Link href={item.path}>
                   <span
-                    className={`flex items-center gap-3 rounded-md px-3 py-2 text-sm font-medium transition-colors hover:bg-accent hover:text-accent-foreground ${
-                      isActive(item.path)
-                        ? "bg-accent text-accent-foreground"
-                        : "text-muted-foreground"
-                    }`}
+                    className={`flex items-center gap-3 rounded-md px-3 py-2 text-sm font-medium transition-colors hover:bg-accent hover:text-accent-foreground ${isActive(item.path)
+                      ? "bg-accent text-accent-foreground"
+                      : "text-muted-foreground"
+                      }`}
                   >
                     <item.icon className="h-4 w-4" />
                     {item.label}

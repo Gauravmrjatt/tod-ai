@@ -1,4 +1,6 @@
 "use client"
+
+import { useState } from "react"
 import { Check, ChevronsUpDown } from "lucide-react"
 import { Button } from "@/components/ui/button"
 import {
@@ -7,19 +9,18 @@ import {
   CommandGroup,
   CommandInput,
   CommandItem,
-  CommandList
+  CommandList,
 } from "@/components/ui/command"
 import {
   Popover,
   PopoverContent,
-  PopoverTrigger
+  PopoverTrigger,
 } from "@/components/ui/popover"
-import { useState } from "react"
 
 export default function ChildSelector({
   children,
   selectedChild,
-  setSelectedChild
+  setSelectedChild,
 }) {
   const [open, setOpen] = useState(false)
 
@@ -32,7 +33,7 @@ export default function ChildSelector({
           aria-expanded={open}
           className="w-[200px] justify-between"
         >
-          {selectedChild.name}
+          {selectedChild?.name || "Select a child"}
           <ChevronsUpDown className="ml-2 h-4 w-4 shrink-0 opacity-50" />
         </Button>
       </PopoverTrigger>
@@ -42,7 +43,7 @@ export default function ChildSelector({
           <CommandList>
             <CommandEmpty>No child found.</CommandEmpty>
             <CommandGroup>
-              {children.map(child => (
+              {children.map((child) => (
                 <CommandItem
                   key={child.id}
                   value={child.name}
@@ -53,7 +54,7 @@ export default function ChildSelector({
                 >
                   <Check
                     className={`mr-2 h-4 w-4 ${
-                      selectedChild.id === child.id
+                      selectedChild?.id === child.id
                         ? "opacity-100"
                         : "opacity-0"
                     }`}

@@ -16,6 +16,7 @@ export default function LoginForm() {
     const [apiError, setApiError] = useState("");
     const router = useRouter();
     const setToken = useAuthStore((state) => state.setToken)
+    
     const goBack = () => {
         router.back()
             ;
@@ -33,7 +34,7 @@ export default function LoginForm() {
         onSuccess: data => {
             setApiError("")
             setToken(data.token);
-            if (data.user.type === "parent") {
+            if (data.user.userType.toLowerCase() === "parent") {
                 router.push("/dashboard/parent");
             } else {
                 router.push("/app");

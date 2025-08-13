@@ -24,13 +24,44 @@ import {
 } from "@/components/ui/select"
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar"
 import { Bell, Mail, Shield, User } from "lucide-react"
+import { useMutation } from "@tanstack/react-query";
+import { createChild } from "@/lib/api-calls"
+import useAuthStore from "@/store/useAuthStore"
+import ChildForm from "./ChildForm"
+import { toast } from "sonner";
 
+import Profile from "@/components/tabs/Profile"
 export default function SettingsPage() {
   const [emailNotifications, setEmailNotifications] = useState(true)
   const [pushNotifications, setPushNotifications] = useState(true)
   const [weeklyReports, setWeeklyReports] = useState(true)
   const [activityAlerts, setActivityAlerts] = useState(true)
+  const token = useAuthStore((state) => state.token);
 
+  const [formState, setFormState] = useState({
+    firstName: "",
+    eamil: "",
+    birthdate: "",
+    gender: "",
+    school: "",
+    grade: "",
+    interests: "",
+  })
+
+  const mutation = useMutation({
+    mutationFn: (formData) => createChild(formData, token),
+    onSuccess: () => {
+      toast.success("Child info updated successfully!")
+    },
+    onError: (error) => {
+      toast.error(error?.response?.data?.message || "Update failed.")
+    },
+  })
+
+  const handleSubmit = (e) => {
+    e.preventDefault()
+    mutation.mutate(formState)
+  }
   return (
     <div>
       <h1 className="text-2xl md:text-3xl font-bold mb-6">Settings</h1>
@@ -44,244 +75,11 @@ export default function SettingsPage() {
         </TabsList>
 
         <TabsContent value="profile">
-          <div className="grid gap-6">
-            <Card>
-              <CardHeader>
-                <CardTitle>Parent Profile</CardTitle>
-                <CardDescription>
-                  Update your personal information
-                </CardDescription>
-              </CardHeader>
-              <CardContent className="space-y-4">
-                <div className="flex flex-col md:flex-row md:items-center gap-4 md:gap-8">
-                  <Avatar className="w-20 h-20">
-                    <AvatarImage
-                      src="/placeholder.svg?height=80&width=80"
-                      alt="Parent"
-                    />
-                    <AvatarFallback className="text-lg">PD</AvatarFallback>
-                  </Avatar>
-                  <div className="space-y-2">
-                    <h3 className="font-medium">Profile Photo</h3>
-                    <div className="flex gap-2">
-                      <Button size="sm" variant="outline">
-                        Upload New
-                      </Button>
-                      <Button size="sm" variant="ghost">
-                        Remove
-                      </Button>
-                    </div>
-                  </div>
-                </div>
-
-                <div className="grid gap-4 pt-4">
-                  <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-                    <div className="space-y-2">
-                      <Label htmlFor="firstName">First Name</Label>
-                      <Input id="firstName" defaultValue="Gaurav" />
-                    </div>
-                    <div className="space-y-2">
-                      <Label htmlFor="lastName">Last Name</Label>
-                      <Input id="lastName" defaultValue="Chaudhary" />
-                    </div>
-                  </div>
-
-                  <div className="space-y-2">
-                    <Label htmlFor="email">Email</Label>
-                    <Input
-                      id="email"
-                      type="email"
-                      defaultValue="abhay@example.com"
-                    />
-                  </div>
-
-                  <div className="space-y-2">
-                    <Label htmlFor="phone">Phone Number</Label>
-                    <Input
-                      id="phone"
-                      type="tel"
-                      defaultValue="(+91) 123-4567"
-                    />
-                  </div>
-
-                  <div className="space-y-2">
-                    <Label htmlFor="relationship">Relationship to Child</Label>
-                    <Select defaultValue="mother">
-                      <SelectTrigger id="relationship">
-                        <SelectValue placeholder="Select relationship" />
-                      </SelectTrigger>
-                      <SelectContent>
-                        <SelectItem value="mother">Mother</SelectItem>
-                        <SelectItem value="father">Father</SelectItem>
-                        <SelectItem value="guardian">Legal Guardian</SelectItem>
-                        <SelectItem value="other">Other</SelectItem>
-                      </SelectContent>
-                    </Select>
-                  </div>
-                </div>
-              </CardContent>
-              <CardFooter className="flex justify-end gap-2">
-                <Button variant="outline">Cancel</Button>
-                <Button>Save Changes</Button>
-              </CardFooter>
-            </Card>
-
-            <Card>
-              <CardHeader>
-                <CardTitle>Account Settings</CardTitle>
-                <CardDescription>
-                  Manage your account preferences
-                </CardDescription>
-              </CardHeader>
-              <CardContent className="space-y-4">
-                <div className="space-y-2">
-                  <Label htmlFor="language">Language</Label>
-                  <Select defaultValue="en">
-                    <SelectTrigger id="language">
-                      <SelectValue placeholder="Select language" />
-                    </SelectTrigger>
-                    <SelectContent>
-                      <SelectItem value="en">English</SelectItem>
-                      <SelectItem value="es">Spanish</SelectItem>
-                      <SelectItem value="fr">French</SelectItem>
-                      <SelectItem value="de">German</SelectItem>
-                    </SelectContent>
-                  </Select>
-                </div>
-
-                <div className="space-y-2">
-                  <Label htmlFor="timezone">Time Zone</Label>
-                  <Select defaultValue="est">
-                    <SelectTrigger id="timezone">
-                      <SelectValue placeholder="Select time zone" />
-                    </SelectTrigger>
-                    <SelectContent>
-                      <SelectItem value="est">Eastern Time (ET)</SelectItem>
-                      <SelectItem value="cst">Central Time (CT)</SelectItem>
-                      <SelectItem value="mst">Mountain Time (MT)</SelectItem>
-                      <SelectItem value="pst">Pacific Time (PT)</SelectItem>
-                    </SelectContent>
-                  </Select>
-                </div>
-              </CardContent>
-              <CardFooter className="flex justify-end gap-2">
-                <Button variant="outline">Cancel</Button>
-                <Button>Save Changes</Button>
-              </CardFooter>
-            </Card>
-          </div>
+         <Profile/>
         </TabsContent>
 
         <TabsContent value="child">
-          <div className="grid gap-6">
-            <Card>
-              <CardHeader>
-                <CardTitle>Child Information</CardTitle>
-                <CardDescription>
-                  Update your child&apos;s details
-                </CardDescription>
-              </CardHeader>
-              <CardContent className="space-y-4">
-                <div className="flex flex-col md:flex-row md:items-center gap-4 md:gap-8">
-                  <Avatar className="w-20 h-20">
-                    <AvatarImage
-                      src="/placeholder.svg?height=80&width=80"
-                      alt="Child"
-                    />
-                    <AvatarFallback className="text-lg">EC</AvatarFallback>
-                  </Avatar>
-                  <div className="space-y-2">
-                    <h3 className="font-medium">Child&apos;s Photo</h3>
-                    <div className="flex gap-2">
-                      <Button size="sm" variant="outline">
-                        Upload New
-                      </Button>
-                      <Button size="sm" variant="ghost">
-                        Remove
-                      </Button>
-                    </div>
-                  </div>
-                </div>
-
-                <div className="grid gap-4 pt-4">
-                  <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-                    <div className="space-y-2">
-                      <Label htmlFor="childFirstName">First Name</Label>
-                      <Input id="childFirstName" defaultValue="Gaurav" />
-                    </div>
-                    <div className="space-y-2">
-                      <Label htmlFor="childLastName">Last Name</Label>
-                      <Input id="childLastName" defaultValue="Chaudhary" />
-                    </div>
-                  </div>
-
-                  <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-                    <div className="space-y-2">
-                      <Label htmlFor="birthdate">Date of Birth</Label>
-                      <Input
-                        id="birthdate"
-                        type="date"
-                        defaultValue="2018-05-15"
-                      />
-                    </div>
-                    <div className="space-y-2">
-                      <Label htmlFor="gender">Gender</Label>
-                      <Select defaultValue="female">
-                        <SelectTrigger id="gender">
-                          <SelectValue placeholder="Select gender" />
-                        </SelectTrigger>
-                        <SelectContent>
-                          <SelectItem value="female">Female</SelectItem>
-                          <SelectItem value="male">Male</SelectItem>
-                          <SelectItem value="other">Other</SelectItem>
-                          <SelectItem value="prefer-not">
-                            Prefer not to say
-                          </SelectItem>
-                        </SelectContent>
-                      </Select>
-                    </div>
-                  </div>
-
-                  <div className="space-y-2">
-                    <Label htmlFor="school">School/Institution</Label>
-                    <Input id="school" defaultValue="GLA" />
-                  </div>
-
-                  <div className="space-y-2">
-                    <Label htmlFor="grade">Grade/Class</Label>
-                    <Select defaultValue="kindergarten">
-                      <SelectTrigger id="grade">
-                        <SelectValue placeholder="Select grade" />
-                      </SelectTrigger>
-                      <SelectContent>
-                        <SelectItem value="preschool">Preschool</SelectItem>
-                        <SelectItem value="kindergarten">
-                          Kindergarten
-                        </SelectItem>
-                        <SelectItem value="first">1st Grade</SelectItem>
-                        <SelectItem value="second">2nd Grade</SelectItem>
-                      </SelectContent>
-                    </Select>
-                  </div>
-
-                  <div className="space-y-2">
-                    <Label htmlFor="interests">Interests & Hobbies</Label>
-                    <Textarea
-                      id="interests"
-                      placeholder="What does your child enjoy?"
-                      defaultValue="Drawing, Singing, Puzzles"
-                    />
-                  </div>
-                </div>
-              </CardContent>
-              <CardFooter className="flex justify-end gap-2">
-                <Button variant="outline">Cancel</Button>
-                <Button>Save Changes</Button>
-              </CardFooter>
-            </Card>
-
-          
-          </div>
+         <ChildForm/>
         </TabsContent>
 
         <TabsContent value="notifications">

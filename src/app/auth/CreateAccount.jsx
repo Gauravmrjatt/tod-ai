@@ -38,7 +38,7 @@ export default function CreateAccount() {
     onSuccess: data => {
       if (data.status === true) {
         setToken(data.token);
-        if (data.user.type === "parent") {
+        if (data.user.userType.toLowerCase() === "parent") {
           router.push("/dashboard/parent");
         } else {
           router.push("/app");
